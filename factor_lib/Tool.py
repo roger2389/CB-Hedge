@@ -112,7 +112,7 @@ def show_stats(bt_ret:pd.DataFrame)->None:
     if isinstance(bt_ret,pd.Series):
         bt_ret = pd.DataFrame({'策略':bt_ret})
     try:
-        display(pd.concat({"CAGR(%)":bt_ret.cagr()*100,
+        display(pd.concat({"CAGR(%)":bt_ret.mean() * 252 *100,
                 'Sharpe':bt_ret.mean()/bt_ret.std()*252**0.5,
                 'Calmar':bt_ret.calmar(),
                 'MDD(%)':bt_ret.max_drawdown()*100,
@@ -127,7 +127,7 @@ def show_stats(bt_ret:pd.DataFrame)->None:
                 '样本数':bt_ret.apply(lambda X:X.dropna().count()),
                 },axis = 1).round(2))
     except:
-        display(pd.concat({"CAGR(%)":bt_ret.cagr()*100,
+        display(pd.concat({"CAGR(%)":bt_ret.mean() * 252 *100,
                 'Sharpe':bt_ret.mean()/bt_ret.std()*252**0.5,
                 'MDD(%)':bt_ret.max_drawdown()*100,
                 '單利MDD(%)' : max_drawdown(bt_ret.cumsum().add(1))*100,
